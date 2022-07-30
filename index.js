@@ -22,18 +22,18 @@ if (args.help) {
     console.log(`
         Usage: node ./index.js [url] [parameters]
 
-        --date [string]: Set a date for the songs
-        --album [string]: Set an album name for the songs
-        --artist [string]: Set an artist name for the songs
-        --album_artist [string]: Set an album artist name for the songs, defaults to artist
-        --publisher [string]: Set a publisher for the songs (won't be setted if not provided)
-        --disc [number]: Set a disc number for the songs (won't be setted if not provided)
-        --genre [string]: Set a genre for the songs (won't be setted if not provided)
-        --title [string]: Set a title for the song (ignored in playlists)
-        --index [number]: Set an index number for the song (ignored in playlist)
-        -o[number]: Ommit songs with index [number] (only available for playlists). Example: "[url] -o5 -o6"
+--date [string]: Set a date for the songs
+--album [string]: Set an album name for the songs
+--artist [string]: Set an artist name for the songs
+--album_artist [string]: Set an album artist name for the songs, defaults to artist
+--publisher [string]: Set a publisher for the songs (won't be setted if not provided)
+--disc [number]: Set a disc number for the songs (won't be setted if not provided)
+--genre [string]: Set a genre for the songs (won't be setted if not provided)
+--title [string]: Set a title for the song (ignored in playlists)
+--index [number]: Set an index number for the song (ignored in playlist)
+-o[number]: Ommit songs with index [number] (only available for playlists). Example: "[url] -o5 -o6"
 
-        --help: Prints this guide
+--help: Prints this guide
     `.trim());
     process.exit(0);
 }
