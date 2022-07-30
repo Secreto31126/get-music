@@ -79,7 +79,7 @@ if (type === "video") {
     try {
         output = moveSong(song, process.env.MUSIC, args.overwrite);
     } catch (err) {
-        console.error("File probably already exists (it can be overwritten if you include the --overwrite flag)");
+        console.error(basename(song), "file probably already exists (it can be overwritten if you include the --overwrite flag)");
         if (args.debug) console.error(err);
         process.exit(1);
     }
