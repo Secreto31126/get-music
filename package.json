@@ -1,0 +1,23 @@
+{
+  "name": "get-music",
+  "version": "1.0.0",
+  "description": "Download Youtube Music songs and playlists to fully configured mp3 files",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Secreto31126",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "ffmetadata": "^1.7.0",
+    "fs-extra": "^10.1.0",
+    "image-size": "^1.0.2",
+    "minimist": "^1.2.6",
+    "node-fetch": "^3.2.9",
+    "tmp": "^0.2.1",
+    "ytdl-core": "^4.11.0",
+    "ytpl": "^2.3.0"
+  }
+}
