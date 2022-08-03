@@ -63,7 +63,7 @@ if (type === "playlist") {
     output = Promise.all(
         songs.map(async song => {
             try {
-                return await moveSong(song, process.env.MUSIC, args.overwrite);
+                return moveSong(song, process.env.MUSIC, args.overwrite);
             } catch (err) {
                 console.error(basename(song), "file probably already exists (it can be overwritten if you include the --overwrite flag)");
                 if (args.debug) console.error(err);
