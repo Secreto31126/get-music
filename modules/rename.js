@@ -23,7 +23,17 @@ export function appendToFilename(file, suffix) {
  * @returns {String} The path to the file
  */
 export function generateOutputFilePath(data) {
-    // Set the track to have at least 1 trailing zero on the left
+    // If defined, set the track to have at least 1 trailing zero on the left
     data.track = data.track ? `${data.track}`.padStart(2, "0") : "";
-    return join(data.artist, data.album, `${data.track} ${data.title}.mp3`.trim());
+    return join(valid(data.artist), valid(data.album), `${valid(data.track)} ${valid(data.title)}.mp3`.trim());
+}
+
+/**
+ * Sanitizes a string to be used in a path
+ * 
+ * @param {String} string The string to sanitize
+ * @returns {String} The sanitized string
+ */
+function valid(string) {
+    return string.replace(/[/\\?%*:|"<>]/g, "");
 }

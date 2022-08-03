@@ -36,7 +36,8 @@ async function getSong(url, params, tmpDir, id = "") {
     tmpDir = tmpDir ?? await createTmpFolder();
 
     const data = parseVideoData(video, params);
-    const output = join(tmpDir, generateOutputFilePath(data));
+    const path = join(tmpDir, generateOutputFilePath(data));
+    const output = mkdirs(dirname(path)).then(() => path);
 
     const tmpSongPath = join(tmpDir, id, "song.mp3");
     const tmpThumbnailPath = join(tmpDir, "thumbnail.jpg");
@@ -58,8 +59,7 @@ async function getSong(url, params, tmpDir, id = "") {
 
     const metadataPromise = addMetadata(await bitratePromise, data, options);
 
-    await mkdirs(dirname(output));
-    await move(await metadataPromise, output);
+    await move(await metadataPromise, await output);
 
     return output;
 }
