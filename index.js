@@ -41,6 +41,7 @@ if (args.help) {
 // Check if the url is valid youtube url
 if (!url) {
     console.log("Please provide a valid Youtube Music url");
+    console.log("Use --help for more information");
     process.exit(1);
 }
 

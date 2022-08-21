@@ -34,7 +34,7 @@ export default async function crop(image) {
      */
     const X = (size.width - size.height) / 2;
 
-    const command = `"${ffmpeg}" -loglevel error -i "${image}" -vf "crop=${size.height}:${size.height}:${X}:0" "${output}"`;
+    const command = `"${ffmpeg}" -i "${image}" -vf "crop=${size.height}:${size.height}:${X}:0" "${output}"`;
     await promisify(exec)(command);
     
     return output;
