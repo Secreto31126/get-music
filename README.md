@@ -9,6 +9,6 @@ git clone "https://github.com/Secreto31126/get-music.git"
 cd get-music
 npm i
 cp .env.example .env
-node index.js "https://music.youtube.com/watch?v=dQw4w9WgXcQ" --index 1
+node index.js "https://music.youtube.com/watch?v=lYBUbBu4W08&feature=share" --index 1
 echo Enjoy!
 ```
