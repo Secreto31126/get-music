@@ -1,5 +1,8 @@
 // Use dotenv to load environment variables from a .env file
 import "dotenv/config.js";
+import "dotenv-expand/config.js";
+
+if (!process.env.MUSIC) process.env.MUSIC = process.platform === "win32" ? process.env.MUSIC_WINDOWS : process.env.MUSIC_DEFAULT;
 
 // Import minimist
 import minimist from "minimist";
