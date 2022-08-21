@@ -8,7 +8,7 @@ Search on Google for how to install each on your system.
 git clone "https://github.com/Secreto31126/get-music.git"
 cd get-music
 npm i
-mv .env.example .env
+cp .env.example .env
 node index.js "https://music.youtube.com/watch?v=dQw4w9WgXcQ" --index 1
 echo Enjoy!
 ```
