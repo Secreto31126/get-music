@@ -19,7 +19,7 @@ export function appendToFilename(file, suffix) {
  * @param {String} data.artist The artist of the song
  * @param {String} data.album The album of the song
  * @param {String} data.title The title of the song
- * @param {Number} [data.track] The track number of the song (must be > 0, it isn't checked)
+ * @param {(Number|String)} [data.track] The track number of the song (must be > 0, it isn't checked)
  * @returns {String} The path to the file
  */
 export function generateOutputFilePath(data) {
