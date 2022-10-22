@@ -8,7 +8,7 @@ import { dirname } from 'path';
  * Save a stream to a location asynchronously
  * 
  * @param {String} filename Where to save the file
- * @param {ReadableStream} stream The stream to save
+ * @param {import("stream").Readable} stream The stream to save
  * @returns {Promise<String>} The path to the saved file
  */
 export default async function download(filename, stream) {

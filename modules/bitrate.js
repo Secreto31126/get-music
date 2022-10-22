@@ -19,7 +19,7 @@ export default async function correctBitrate(file) {
     const output = appendToFilename(file, "bitrate");
     
     // -id3v2_version 3
-    const command = `"${ffmpeg}" -i "${file}" -b:a 148k "${output}"`;
+    const command = `"${ffmpeg}" -hide_banner -i "${file}" -b:a 148k "${output}"`;
     await promisify(exec)(command);
 
     return output;

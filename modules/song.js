@@ -26,7 +26,7 @@ import { generateOutputFilePath } from "./rename.js";
  * @param {String} url The url of the video
  * @param {Object} params The parameters to use that will modify the output
  * @param {String} [tmpDir] The path to the tmp directory, used for downloading playlists, if not provided, a new one will be created
- * @param {String} [songId] The id of the song, used for downloading playlists
+ * @param {String} id The id of the song, used for downloading playlists
  * @returns {Promise<String>} The full path to the output file (tmp/author/album/file.mp3)
  */
 async function getSong(url, params, tmpDir, id = "") {

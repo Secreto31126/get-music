@@ -2,7 +2,8 @@
 import "dotenv/config.js";
 import "dotenv-expand/config.js";
 
-if (!process.env.MUSIC) process.env.MUSIC = process.platform === "win32" ? process.env.MUSIC_WINDOWS : process.env.MUSIC_DEFAULT;
+if (!process.env.MUSIC) process.env.MUSIC = (process.platform === "win32" ? process.env.MUSIC_WINDOWS : process.env.MUSIC_DEFAULT) ?? "./";
+if (!process.env.FFMPEG_PATH) process.env.FFMPEG_PATH = "ffmpeg";
 
 // Import minimist
 import minimist from "minimist";
@@ -67,7 +68,7 @@ if (type === "playlist") {
     output = Promise.all(
         songs.map(async song => {
             try {
-                return moveSong(song, process.env.MUSIC, args.overwrite);
+                return moveSong(song, process.env.MUSIC ?? "./", args.overwrite);
             } catch (err) {
                 console.error(basename(song), "file probably already exists (it can be overwritten if you include the --overwrite flag)");
                 if (args.debug) console.error(err);
@@ -81,7 +82,7 @@ if (type === "video") {
     const song = await getSong(url, args);
 
     try {
-        output = moveSong(song, process.env.MUSIC, args.overwrite);
+        output = moveSong(song, process.env.MUSIC ?? "./", args.overwrite);
     } catch (err) {
         console.error(basename(song), "file probably already exists (it can be overwritten if you include the --overwrite flag)");
         if (args.debug) console.error(err);
