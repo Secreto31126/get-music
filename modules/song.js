@@ -42,7 +42,7 @@ async function getSong(url, params, tmpDir, id = "") {
     const tmpSongPath = join(tmpDir, id, "song.mp3");
     const tmpThumbnailPath = join(tmpDir, "thumbnail.jpg");
 
-    const songStream = ytdl(url, { format: "mp3" });
+    const songStream = ytdl(url, { quality: "highestaudio" });
     const songPromise = download(tmpSongPath, songStream);
 
     const bitratePromise = correctBitrate(await songPromise);
