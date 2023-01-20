@@ -13,7 +13,7 @@ import { basename } from "path";
 
 // Import custom modules
 import getSong from "./modules/song.js";
-import moveSong from "./modules/move.js";
+import { moveSong, moveImage } from "./modules/move.js";
 import videoOrPlaylist from "./modules/type.js";
 import getPlaylist from "./modules/playlist.js";
 
@@ -36,6 +36,7 @@ if (args.help) {
 --title [string]: Set a title for the song (ignored in playlists)
 --index [number]: Set an index number for the song (ignored in playlist)
 -o[number]: Ommit songs with index [number] (only available for playlists). Example: "[url] -o5 -o6"
+-i --keep-images: Keep the images in the song folder
 
 --help: Prints this guide
     `.trim());
@@ -57,6 +58,8 @@ if (!type) {
     process.exit(1);
 }
 
+const keep_images = !!args.i || !!args["keep-images"];
+
 let output;
 
 if (type === "playlist") {
@@ -65,9 +68,16 @@ if (type === "playlist") {
 
     const songs = await Promise.all(await getPlaylist(url, args));
 
+    const moved_images = {};
+
     output = Promise.all(
-        songs.map(async song => {
+        songs.map(async ({ song, image }) => {
             try {
+                if (keep_images && !moved_images[image]) {
+                    await moveImage(image, song, process.env.MUSIC ?? "./", args.overwrite);
+                    moved_images[image] = true;
+                }
+
                 return moveSong(song, process.env.MUSIC ?? "./", args.overwrite);
             } catch (err) {
                 console.error(basename(song), "file probably already exists (it can be overwritten if you include the --overwrite flag)");
@@ -79,9 +89,10 @@ if (type === "playlist") {
 }
 
 if (type === "video") {
-    const song = await getSong(url, args);
+    const { song, image } = await getSong(url, args);
 
     try {
+        if (keep_images) await moveImage(image, song, process.env.MUSIC ?? "./", args.overwrite);
         output = moveSong(song, process.env.MUSIC ?? "./", args.overwrite);
     } catch (err) {
         console.error(basename(song), "file probably already exists (it can be overwritten if you include the --overwrite flag)");

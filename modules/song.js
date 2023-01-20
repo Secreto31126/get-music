@@ -23,13 +23,13 @@ import { generateOutputFilePath } from "./rename.js";
  * Download a single song
  * 
  * @async
- * @param {String} url The url of the video
+ * @param {string} url The url of the video
  * @param {Object} params The parameters to use that will modify the output
- * @param {String} [tmpDir] The path to the tmp directory, used for downloading playlists, if not provided, a new one will be created
- * @param {String} id The id of the song, used for downloading playlists
- * @returns {Promise<String>} The full path to the output file (tmp/author/album/file.mp3)
+ * @param {string} [tmpDir] The path to the tmp directory, used for downloading playlists, if not provided, a new one will be created
+ * @param {string} id The id of the song, used for downloading playlists
+ * @returns {Promise<{ song: string; image: string }>} The full path to the song file (/tmp/author/album/file.mp3) and the image file (/tmp/author/album/file.png)
  */
-async function getSong(url, params, tmpDir, id = "") {
+export default async function getSong(url, params, tmpDir, id = "") {
     // Check if video exists with ytdl (will throw if not)
     const video = await ytdl.getBasicInfo(url);
     
@@ -37,7 +37,7 @@ async function getSong(url, params, tmpDir, id = "") {
 
     const data = parseVideoData(video, params);
     const path = join(tmpDir, generateOutputFilePath(data));
-    const output = mkdirs(dirname(path)).then(() => path);
+    const song = mkdirs(dirname(path)).then(() => path);
 
     const tmpSongPath = join(tmpDir, id, "song.mp3");
     const tmpThumbnailPath = join(tmpDir, "thumbnail.jpg");
@@ -50,18 +50,16 @@ async function getSong(url, params, tmpDir, id = "") {
     const thumbnailStream = (await fetch(video.videoDetails.thumbnails.at(-1).url)).body;
     const thumbnailPromise = download(tmpThumbnailPath, thumbnailStream);
 
-    const cropPromise = crop(await thumbnailPromise);
+    const image = crop(await thumbnailPromise);
     
     const options = {
-        attachments: [ await cropPromise ],
+        attachments: [ await image ],
         "id3v2.3": true
     };
 
     const metadataPromise = addMetadata(await bitratePromise, data, options);
 
-    await move(await metadataPromise, await output);
+    await move(await metadataPromise, await song);
 
-    return output;
+    return { song: await song, image: await image };
 }
-
-export default getSong;
