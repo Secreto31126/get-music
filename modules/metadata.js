@@ -16,6 +16,7 @@ import { promisify } from "util";
  * @returns {Promise<String>} The path to the file
  */
 export default async function addMetadata(path, data, options) {
+    // @ts-ignore
     await promisify(ffmetadata.write)(path, data, options);
     return path;
 }
