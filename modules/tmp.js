@@ -12,5 +12,6 @@ setGracefulCleanup();
  * @returns {Promise<String>} The path to the tmp folder
  */
 export default function createTmpFolder(prefix = "get-music") {
+    // @ts-ignore
     return promisify(dir)({ prefix, unsafeCleanup: true });
 }

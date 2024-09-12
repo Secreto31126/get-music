@@ -18,7 +18,7 @@ import createTmpFolder from "./tmp.js";
  * @async
  * @param {String} url The url of the playlist
  * @param {Object} params The parameters to use that will modify the output
- * @returns {Promise<Array<Promise<String>>>} An array of full path to the outputs files (tmp/author/album/file.mp3)
+ * @returns {Promise<Array<Promise<{ song: string; image: string; }>>>} An array of full path to the outputs files (/tmp/author/album/file.mp3)
  */
 export default async function getPlaylist(url, params) {
     const playlist = await ytpl(url, { limit: Infinity });
@@ -29,11 +29,12 @@ export default async function getPlaylist(url, params) {
     const thumbnailStream = (await fetch(playlist.bestThumbnail.url)).body;
     await download(tmpThumbnailPath, thumbnailStream);
 
+    /** @type {Array<Promise<{ song: string; image: string; }>>} */
     const output = [];
     playlist.items.forEach(async song => {
         if (params.o?.includes(song.index)) return;
-        const file = getSong(song.url, { ...song, ...params }, tmpDir, song.id);
-        output.push(file);
+        const promise = getSong(song.url, { ...song, ...params }, tmpDir, song.id);
+        output.push(promise);
     });
     
     return output;
